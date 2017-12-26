@@ -1,13 +1,14 @@
-# Photon
+# EssayTools by Isaak Eriksson
 
-UI toolkit for building desktop apps with Electron.
+Using the natural language features provided by Google's API, I've began a christmas project consisting of tools that would critically analyze texts in order to write essays faster.
 
 ## Getting started
 
-* Clone the repo with `git clone https://github.com/connors/photon.git`
-* [Read the docs](http://photonkit.com) to learn about the components and how to get your new application started
+* Clone the repo with `git clone https://github.com/MyIsaak/EssayTools.git`
+* [Read the Electron docs](https://electronjs.org/docs) to learn since it's the framework used to host this tool 
+* [Read the Google Natural Language API docs](https://cloud.google.com/natural-language/docs/basics) to learn since it's the main NLP API being used
 
-Take note that our master branch is our active, unstable development branch and that if you're looking to download a stable copy of the repo, check the [tagged downloads](https://github.com/connors/photon/tags).
+Take note that this project began as a christmas project solely for the purpose of helping students (and myself) analyze essays using common natural language techniques. 
 
 ### What's included
 
@@ -55,33 +56,10 @@ Please file a GitHub issue to [report a bug](https://github.com/connors/photon/i
 ## Development
 
 1. Install node dependencies: `npm install`.
-2. Open the example app: `npm start`.
+2. Open the app: `npm start`.
 
 Modifying source Sass files? Open a second Terminal tab and run `grunt` to kick off a build the compiled `photon.css`.
 
-## Versioning
-
-For transparency into our release cycle and in striving to maintain backward compatibility, Photon is maintained under the Semantic Versioning guidelines. Sometimes we screw up, but we'll adhere to these rules whenever possible.
-
-Releases will be numbered with the following format:
-
-`<major>.<minor>.<patch>`
-
-And constructed with the following guidelines:
-
-* Breaking backward compatibility **bumps the major** while resetting minor and patch
-* New additions without breaking backward compatibility **bumps the minor** while resetting the patch
-* Bug fixes and misc changes **bumps only the patch**
-
-For more information on SemVer, please visit <http://semver.org/>.
-
-## Maintainers
-
-Connor Sears
-
-* <https://twitter.com/connors>
-* <https://github.com/connors>
-
 ## License
 
-Copyright @connors. Released under MIT.
+Copyright @IsaakEriksson. Released under MIT.
