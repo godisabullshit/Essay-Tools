@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Isaak's Natural Language Toolbox</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/photon.min.css">
+
+    <!-- Javascript -->
+    <script src="js/menu.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="window">
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+          <!-- Sidebar -->
+          <div class="pane-sm sidebar">
+            <nav id="nav" class="nav-group">
+              <h5 class="nav-group-title">Tools</h5>
+              <span id="sentiment-text" class="nav-group-item active">
+                <span class="icon icon-heart"></span>
+                Sentiment Analysis
+              </span>
+              <span id="entities-text" class="nav-group-item">
+                <span class="icon icon-network"></span>
+                Entity Analysis
+              </span>
+              <span id="syntax-text" class="nav-group-item">
+                <span class="icon icon-flow-tree"></span>
+                Syntactic Analysis
+              </span>
+              <span id="classify-text" class="nav-group-item">
+                <span class="icon icon-database"></span>
+                Content Classification
+              </span>
+            </nav>
+          </div>
+
+          <!-- Main window -->
+          <div class="pane" style="padding: 10px;">
+            <div class="form-group">
+              <label>Content</label>
+              <textarea id="text" class="form-control" rows="3">
+                The Manic Pixie Dream Girl is a well-known pop-culture cliché. The term was coined by critic Nathan Rabin in his review of 2005's Elizabethtown to describe the cheerful, bubbly flight attendant played by Kirsten Dunst. Since then, this character type has been analyzed everywhere, from XoJane to Slate to the Guardian. A list of film examples of the "Manic Pixie Dream Girl" includes roles played by everyone from Barbra Streisand to Natalie Portman to both Hepburns (Audrey and Katharine)
+              </textarea>
+            </div>
+            <button id="submit" class="btn btn-default">Submit</button>
+            <button id="clear" class="btn btn-default">Clear</button>
+            <textarea id="result" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
