@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/photon.min.css">
 
     <!-- Javascript -->
+    <script src="js/tippy.all.min.js"></script>
     <script src="js/menu.js" charset="utf-8"></script>
   </head>
   <body>
@@ -41,14 +42,18 @@
           <!-- Main window -->
           <div class="pane" style="padding: 10px;">
             <div class="form-group">
-              <label>Content</label>
+              <p id="description"></p>
+              <label><b>Enter text below and click Submit</b></label>
               <textarea id="text" class="form-control" rows="3">
                 The Manic Pixie Dream Girl is a well-known pop-culture cliché. The term was coined by critic Nathan Rabin in his review of 2005's Elizabethtown to describe the cheerful, bubbly flight attendant played by Kirsten Dunst. Since then, this character type has been analyzed everywhere, from XoJane to Slate to the Guardian. A list of film examples of the "Manic Pixie Dream Girl" includes roles played by everyone from Barbra Streisand to Natalie Portman to both Hepburns (Audrey and Katharine)
               </textarea>
             </div>
             <button id="submit" class="btn btn-default">Submit</button>
             <button id="clear" class="btn btn-default">Clear</button>
-            <textarea id="result" class="form-control" rows="3"></textarea>
+            <div id="result" class="form-control" rows="6">
+              
+            </div>
+            <canvas id="chart"></canvas>
           </div>
         </div>
       </div>

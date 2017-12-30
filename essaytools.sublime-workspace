@@ -1,0 +1,396 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tool",
+				"tooltips\t{}"
+			],
+			[
+				"get",
+				"getElementsByName(name)"
+			],
+			[
+				"font",
+				"fontSize"
+			],
+			[
+				"json",
+				"jsonSentences"
+			],
+			[
+				"stri",
+				"string"
+			],
+			[
+				"lo",
+				"log"
+			],
+			[
+				"result",
+				"resultText\t{}"
+			],
+			[
+				"p",
+				"parse(json)"
+			],
+			[
+				"JS",
+				"JSON\t{}"
+			],
+			[
+				"ad",
+				"addEventListener(type, listener, capture)"
+			],
+			[
+				"canvas",
+				"canvasNode"
+			],
+			[
+				"resul",
+				"resultText"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "// YOU NEED TO REPLACE THE GOOGLE_APPLICATION_CREDENTIALS with your own\n\nconst remote = require('remote');\n\n// Add the listener\ndocument.addEventListener('DOMContentLoaded', function () {\n  // Select the analysis tool\n  var analysisTool = 'sentiment-text';\n  var navBar = document.getElementById('nav').children;\n  for (var i = navBar.length - 1; i >= 1; i--) {\n    navBar[i].onclick = function() {\n      for (var j = navBar.length - 1; j >= 1; j--) {\n        navBar[j].className = \"nav-group-item\";\n      }\n      this.className = \"nav-group-item active\";\n      analysisTool = this.id;\n    };\n  }\n\n  // Submit and process the text\n  var submitButton = document.getElementById('submit');\n  var resultText = document.getElementById('result');\n  submitButton.onclick = function() {\n    var text = document.getElementById('text').value;\n    const spawn = require('child_process').spawn;   // The power of Node.JS\n    var env = Object.create( process.env );\n    env.GOOGLE_APPLICATION_CREDENTIALS = `${__dirname}/../../Machine Learning Playground-0ba14ae6bf59.json`;\n    console.log()\n    var analyze = spawn('node', ['dist/template-app/js/analyze.js', analysisTool, text], { env: env });\n    var output = \"\";\n\n    analyze.stdout.on('data', function (data) {\n      output += data; \n    });\n\n    analyze.stderr.on('data', function (data) {\n      console.log('stderr: ' + data);\n    });\n\n    analyze.on('close', function (code) {\n      console.log('Finished with code: ' + code);\n      console.log(output);\n      var jsonParsed = JSON.parse(output);\n\n      jsonParsed.sentences.forEach(sentence => {\n        const fontSize = sentence.magnitude*10;\n        resultText.innerHTML += \n          `<font class=\\\"tooltip\\\" title=\\\"Score: ${sentence.score*100}%, Magnitude : ${fontSize}\\\" size=${fontSize} color=\\\"hsl(${50+(sentence.score*50)}, 100%, 50%)\\\">`+\n            sentence.sentence+\n          \"</font>\";\n      });\n\n      // Setup the tooltip\n      tippy('.tooltip');https://github.com/MyIsaak/100-days-of-code/\n\n      // Highlight the text when hovered\n      var tooltips = document.getElementsByClassName('tooltip');\n      for (var i = tooltips.length - 1; i >= 0; i--) {\n        tooltips[i].onmouseover = function(e) {\n          e = e || window.event;\n          var target = e.target || e.srcElement;\n          selectElementText(target);\n        };\n      }\n    });\n  }\n\n  // Setup the clear button\n  var clearButton = document.getElementById('clear');\n  clearButton.onclick = function() {\n    resultText.innerHTML = \"\";\n  }\n})\n\nfunction selectElementText(el, win) {\n    el.focus();\n    win = win || window;\n    var doc = win.document, sel, range;\n    if (win.getSelection && doc.createRange) {\n        sel = win.getSelection();\n        range = doc.createRange();\n        range.selectNodeContents(el);\n        sel.removeAllRanges();\n        sel.addRange(range);\n    } else if (doc.body.createTextRange) {\n        range = doc.body.createTextRange();\n        range.moveToElementText(el);\n        range.select();\n    }\n}\n\nNumber.prototype.clamp = function(min, max) {\n  return Math.min(Math.max(this, min), max);\n};",
+			"file": "dist/template-app/js/menu.js",
+			"file_size": 3063,
+			"file_write_time": 131589475705973534,
+			"settings":
+			{
+				"buffer_size": 3107,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dist/template-app/app.js",
+			"settings":
+			{
+				"buffer_size": 1433,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dist/template-app/index.html",
+			"settings":
+			{
+				"buffer_size": 2534,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dist/template-app/js/analyze.js",
+			"settings":
+			{
+				"buffer_size": 12303,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 189.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 428.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/myisaak/Documents/EssayTools"
+	],
+	"file_history":
+	[
+		"/home/myisaak/.config/openbox/rc.xml",
+		"/home/myisaak/.config/sublime-text-3/Packages/User/Electron.sublime-build",
+		"/home/myisaak/Documents/EssayTools/essaytools.sublime-project",
+		"/home/myisaak/Documents/EssayTools/dist/template-app/js/chart.js"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "dist/template-app/js/menu.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2004,
+								2004
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 87.0,
+						"translation.y": 501.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "dist/template-app/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1433,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1094,
+								1094
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 481.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "dist/template-app/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								218,
+								218
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "dist/template-app/js/analyze.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1123,
+								1123
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 102.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/Electron.sublime-build",
+	"project": "essaytools.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 227.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -39,16 +39,26 @@ function analyzeSentimentOfText(text) {
     .analyzeSentiment({document: document})
     .then(results => {
       const sentiment = results[0].documentSentiment;
-      console.log(`Document sentiment:`);
-      console.log(`  Score: ${sentiment.score}`);
-      console.log(`  Magnitude: ${sentiment.magnitude}`);
+      var jsonSentences = [];
 
       const sentences = results[0].sentences;
       sentences.forEach(sentence => {
-        console.log(`Sentence: ${sentence.text.content}`);
-        console.log(`  Score: ${sentence.sentiment.score}`);
-        console.log(`  Magnitude: ${sentence.sentiment.magnitude}`);
+        jsonSentences.push({
+          sentence: sentence.text.content,
+          score: sentence.sentiment.score,
+          magnitude: sentence.sentiment.magnitude
+        });
       });
+
+      var jsonMain = {
+        main: { 
+          score: sentiment.score,
+          magnitude: sentiment.magnitude
+        },
+        sentences: jsonSentences
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -81,16 +91,26 @@ function analyzeSentimentInFile(bucketName, fileName) {
     .analyzeSentiment({document: document})
     .then(results => {
       const sentiment = results[0].documentSentiment;
-      console.log(`Document sentiment:`);
-      console.log(`  Score: ${sentiment.score}`);
-      console.log(`  Magnitude: ${sentiment.magnitude}`);
+      var jsonSentences = [];
 
       const sentences = results[0].sentences;
       sentences.forEach(sentence => {
-        console.log(`Sentence: ${sentence.text.content}`);
-        console.log(`  Score: ${sentence.sentiment.score}`);
-        console.log(`  Magnitude: ${sentence.sentiment.magnitude}`);
+        jsonSentences.push({
+          sentence: sentence.text.content,
+          score: sentence.sentiment.score,
+          magnitude: sentence.sentiment.magnitude
+        });
       });
+
+      var jsonMain = {
+        main: { 
+          score: sentiment.score,
+          magnitude: sentiment.magnitude
+        },
+        sentences: jsonSentences
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -122,15 +142,23 @@ function analyzeEntitiesOfText(text) {
     .analyzeEntities({document: document})
     .then(results => {
       const entities = results[0].entities;
+      var jsonEntities = [];
 
-      console.log('Entities:');
       entities.forEach(entity => {
-        console.log(entity.name);
-        console.log(` - Type: ${entity.type}, Salience: ${entity.salience}`);
-        if (entity.metadata && entity.metadata.wikipedia_url) {
-          console.log(` - Wikipedia URL: ${entity.metadata.wikipedia_url}$`);
-        }
+        jsonEntities.push({
+          name: entity.name,
+          type: entity.type,
+          salience: entity.salience,
+          url: entity.metadata && entity.metadata.wikipedia_url ? entity.metadata.wikipedia_url : null,
+          mentions : entity.mentions
+        });
       });
+
+      var jsonMain = {
+        entities: jsonEntities
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -163,15 +191,23 @@ function analyzeEntitiesInFile(bucketName, fileName) {
     .analyzeEntities({document: document})
     .then(results => {
       const entities = results[0].entities;
+      var jsonEntities = [];
 
-      console.log('Entities:');
       entities.forEach(entity => {
-        console.log(entity.name);
-        console.log(` - Type: ${entity.type}, Salience: ${entity.salience}`);
-        if (entity.metadata && entity.metadata.wikipedia_url) {
-          console.log(` - Wikipedia URL: ${entity.metadata.wikipedia_url}$`);
-        }
+        jsonEntities.push({
+          name: entity.name,
+          type: entity.type,
+          salience: entity.salience,
+          url: entity.metadata && entity.metadata.wikipedia_url ? entity.metadata.wikipedia_url : null,
+          mentions: entity.mentions
+        });
       });
+
+      var jsonMain = {
+        entities: jsonEntities
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -203,12 +239,21 @@ function analyzeSyntaxOfText(text) {
     .analyzeSyntax({document: document})
     .then(results => {
       const syntax = results[0];
+      var jsonTokens = [];
 
-      console.log('Parts of speech:');
       syntax.tokens.forEach(part => {
-        console.log(`${part.partOfSpeech.tag}: ${part.text.content}`);
-        console.log(`Morphology:`, part.partOfSpeech);
+        jsonTokens.push({
+          tag: part.partOfSpeech.tag,
+          content: part.text.content,
+          morphology: part.partOfSpeech,
+        });
       });
+
+      var jsonMain = {
+        tokens: jsonTokens
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -241,12 +286,21 @@ function analyzeSyntaxInFile(bucketName, fileName) {
     .analyzeSyntax({document: document})
     .then(results => {
       const syntax = results[0];
+      var jsonTokens = [];
 
-      console.log('Parts of speech:');
       syntax.tokens.forEach(part => {
-        console.log(`${part.partOfSpeech.tag}: ${part.text.content}`);
-        console.log(`Morphology:`, part.partOfSpeech);
+        jsonSyntax.push({
+          tag: part.partOfSpeech.tag,
+          content: part.text.content,
+          morphology: part.partOfSpeech,
+        });
       });
+
+      var jsonMain = {
+        tokens: jsonTokens
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -278,13 +332,20 @@ function classifyTextOfText(text) {
     .classifyText({document: document})
     .then(results => {
       const classification = results[0];
+      var jsonCategories = [];
 
-      console.log('Categories:');
       classification.categories.forEach(category => {
-        console.log(
-          `Name: ${category.name}, Confidence: ${category.confidence}`
-        );
+        jsonCategories.push({
+          name: category.name,
+          confidence: category.confidence
+        });
       });
+
+      var jsonMain = {
+        categories: jsonCategories
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
@@ -317,13 +378,20 @@ function classifyTextInFile(bucketName, fileName) {
     .classifyText({document: document})
     .then(results => {
       const classification = results[0];
+      var jsonCategories = [];
 
-      console.log('Categories:');
       classification.categories.forEach(category => {
-        console.log(
-          `Name: ${category.name}, Confidence: ${category.confidence}`
-        );
+        jsonCategories.push({
+          name: category.name,
+          confidence: category.confidence
+        });
       });
+
+      var jsonMain = {
+        categories: jsonCategories
+      };
+
+      console.log(JSON.stringify(jsonMain));
     })
     .catch(err => {
       console.error('ERROR:', err);
