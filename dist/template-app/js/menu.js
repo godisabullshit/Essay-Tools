@@ -5,8 +5,8 @@ const remote = require('remote');
 const toolDescriptions = {
   "sentiment-text": "<b>Sentiment analysis</b> inspects the given text and identifies the prevailing emotional opinion within the text, especially to determine a writer's attitude as positive, negative, or neutral.<br><br><b>score</b> of the sentiment ranges between -1.0 (negative) and 1.0 (positive) and corresponds to the overall emotional leaning of the text.<br><br><b>magnitude</b> indicates the overall strength of emotion (both positive and negative) within the given text, between 0.0 and +inf",
   "entities-text": "<b>Entity analysis</b> inspects the given text for known entities (Proper nouns such as public figures, landmarks, and so on. Common nouns such as restaurant, stadium, and so on.) and returns information about those entities.<br><br><b>type</b> indicates the type of this entity (for example if the entity is a person, location, consumer good, etc.) This information helps distinguish and/or disambiguate entities, and can be used for writing patterns or extracting information<br><br><b>salience</b> indicates the importance or relevance of this entity to the entire document text. This score can assist information retrieval and summarization by prioritizing salient entities. Scores closer to 0.0 are less important, while scores closer to 1.0 are highly important.<br><br><b>URL</b>, if present, contains the Wikipedia URL pertaining to this entity.",
-  "syntax-text": "<b>Syntactic analysis</b> extracts linguistic information, breaking up the given text into a series of sentences and tokens (generally, word boundaries), providing further analysis on those tokens.<br><br><b>Under development.</b>",
-  "classify-text": "<b>Content classification</b> analyzes text content and returns a content category for the content.<br><br><b>Under development.</b>"
+  "syntax-text": "<b>Syntactic analysis</b> extracts linguistic information, breaking up the given text into a series of sentences and tokens (generally, word boundaries), providing further analysis on those tokens.<br><br><b>tag</b> denotes the part of speech using a coarse-grained POS tag (NOUN, VERB, etc.), and provides top-level surface syntax information.<br><br><b>number</b> denotes a word's grammatical number indicating its count distinction.<br><br><b>person</b> denotes a word's grammatical person indicating a speaker's relationship to an event.<br><br><b>gender</b> denotes a noun's grammatical gender.<br><br><b>case</b> denotes a word's grammatical case and its relationship to its containing sentence.<br><br><b>tense</b> denotes a verb's grammatical tense, which indicates the verb's reference to a position in time. Note that <b>tense</b> is distinct from <b>aspect</b>, which also deals with a verb's relationship to time, but focuses on the characteristics of that time flow, rather than its position.<br><br><b>aspect</b> denotes a verb's grammatical aspect, its expression of time flow. Unlike <b>tense</b>, which focuses on a verb's position within time, <b>aspect</b> focuses on the characteristics of that time flow where it occurs.<br><br><b>mood</b> denotes a verb's grammatical mood, which indicates attitude about an underlying action.<br><br><b>voice</b> denotes a verb's grammatical voice, the relationship between an action and a subject and/or object.<br><br><b>reciprocity</b> denotes a word's (typically a pronoun's) reciprocity, indicating the pronoun refers to a noun phrase elsewhere within the sentence.<br><br><b>proper</b> denotes whether a noun is part of a proper name.<br><br><b>form</b> denotes additional morphological forms that don't neatly fit into the previous set of common forms.<br><br>",
+  "classify-text": "<b>Content classification</b> analyzes text content and returns a content category for the content."
 };
 
 // After the document has loaded
@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const spawn = require('child_process').spawn;   // The power of Node.JS
     var env = Object.create( process.env );
     env.GOOGLE_APPLICATION_CREDENTIALS = `${__dirname}/../../Machine Learning Playground-0ba14ae6bf59.json`;
-    console.log()
     var analyze = spawn('node', ['dist/template-app/js/analyze.js', analysisTool, text], { env: env });
     var output = "";
 
@@ -82,11 +81,28 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
 
         case "syntax-text":
-          resultText.innerHTML = output;
+          var text = "", types = "";
+          jsonParsed.tokens.forEach(token => {
+            var morphology = token.morphology;
+            types = "";
+            for (type in morphology) {
+              if (morphology[type].indexOf("UNKNOWN") == -1) {
+                types += type + ": " + morphology[type] + "<br>"; 
+              }
+            }
+            text += `<font class=\"tooltip\" title=\"${types}\" color=\"${token.tag == "VERB" ? "green" : `${token.tag == "ADJ" ? "red" : "black"}`}\">${token.content} </font>`;
+          });
+          
+          resultText.innerHTML = text;
           break;
 
         case "classify-text":
-          resultText.innerHTML = output;
+          var text = "";
+          jsonParsed.categories.forEach(category => {
+            text += "Category: " + category.name + "<br>Confidence: " + category.confidence + "<br><br>";
+          });
+
+          resultText.innerHTML = text;
           break;
       }
 
