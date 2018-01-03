@@ -1,3 +1,4 @@
+![Say Thanks](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)
 # EssayTools by Isaak Eriksson
 
 Using the natural language features provided by Google's API, I've began a christmas project consisting of tools that would critically analyze texts in order to write essays faster.
