@@ -23,7 +23,7 @@
   "license": "MIT",
   "devDependencies": {
     "electron-prebuilt": "^1.4.13",
-    "eslint": "^5.26.0"
+    "eslint": "^6.5.1"
   },
   "dependencies": {
     "@google-cloud/language": "^1.1.0",
